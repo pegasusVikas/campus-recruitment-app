@@ -23,6 +23,7 @@ import Login from './screens/Login'
 import CompanyRegister from './screens/CompanyRegister'
 import StudentRegister from './screens/StudentRegister'
 import JobOverview from './screens/student/JobOverview'
+import StudentDrawer from './screens/student/DrawerNavigator'
 
 const Drawer=createDrawerNavigator();
 
@@ -34,8 +35,28 @@ const theme={
   }
 }
 
+function DrawerContent() {
+  return (
+    <View style={{ flex:1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Drawer content</Text>
+    </View>
+  );
+}
+function HomeScreen() {
+  return (
+    <View style={{  flex:1,alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+    </View>
+  );
+}
 
-
+const StudentNavigator=()=>{
+  return (
+    <Drawer.Navigator drawerContent={(props) => <StudentDrawer {...props}/>}>
+      <Drawer.Screen name="Home" component={HomeScreen} />
+    </Drawer.Navigator>
+  );
+}
 
 const App = () => {
  //const isDarkMode = useColorScheme() === 'dark';
@@ -43,12 +64,10 @@ const App = () => {
 
   return (
     <PaperProvider theme={theme}>
-      
      {/* <Login/><CompanyRegister/> <StudentRegister/><JobOverview/>*/}
-     <Drawer.Navigator>
-       
-     </Drawer.Navigator>
-    
+     <NavigationContainer>
+     <StudentNavigator/>
+    </NavigationContainer>
     </PaperProvider>
   );
 };
