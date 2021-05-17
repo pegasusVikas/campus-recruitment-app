@@ -24,6 +24,7 @@ import CompanyRegister from './screens/CompanyRegister'
 import StudentRegister from './screens/StudentRegister'
 import JobOverview from './screens/student/JobOverview'
 import StudentDrawer from './screens/student/DrawerNavigator'
+import Profile from './screens/student/Profile'
 
 const Drawer=createDrawerNavigator();
 
@@ -42,11 +43,9 @@ function DrawerContent() {
     </View>
   );
 }
-function HomeScreen() {
+function HomeScreen(props) {
   return (
-    <View style={{  flex:1,alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-    </View>
+    <Profile {...props} screen="main"/>
   );
 }
 
@@ -54,6 +53,8 @@ const StudentNavigator=()=>{
   return (
     <Drawer.Navigator drawerContent={(props) => <StudentDrawer {...props}/>}>
       <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Comp" component={CompanyRegister} />
+      <Drawer.Screen name="Stud" component={StudentRegister} />
     </Drawer.Navigator>
   );
 }

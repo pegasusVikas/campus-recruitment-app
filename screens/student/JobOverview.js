@@ -6,7 +6,7 @@ import {
     View,
     } from 'react-native';
 
-import {Navig} from '@react-navigation/native'
+
 
 const App = () => {
     //const isDarkMode = useColorScheme() === 'dark';

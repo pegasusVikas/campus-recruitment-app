@@ -5,7 +5,7 @@ import {
     DrawerItem,
     DrawerContentScrollView
 } from '@react-navigation/drawer'
-export default ()=>{
+export default ({navigation})=>{
     return (
     <View style={{ flex:1, alignItems: 'center', justifyContent: "space-between" }}>
       <View style={{width:"100%"}}>
@@ -17,10 +17,10 @@ export default ()=>{
       </View>
       </Drawer.Section>
       <Drawer.Section style={styles.section}>
-          <Drawer.Item icon="account" label="Profile" active={true}/>
-          <Drawer.Item icon="briefcase" label="Jobs" onPress={()=>{}}/>
-          <Drawer.Item icon="laptop" label="Internships" onPress={()=>{}}/>
-          <Drawer.Item icon="book" label="Training programs" onPress={()=>{}}/>
+          <Drawer.Item icon="account" label="Profile" onPress={()=>{navigation.navigate("Home")}} active={true} />
+          <Drawer.Item icon="briefcase" label="Jobs" onPress={()=>{navigation.navigate("Comp")}}/>
+          <Drawer.Item icon="laptop" label="Internships" onPress={()=>{navigation.navigate("Stud")}}/>
+          <Drawer.Item icon="book" label="Training programs" onPress={()=>{navigation.goBack()}}/>
       </Drawer.Section>
       </View>
       <Drawer.Section style={styles.section}>
