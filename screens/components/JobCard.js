@@ -8,16 +8,16 @@ import {
 
 
 
-const App = ({uri,title,subtitle,salary,date,type}) => {
+const App = ({item}) => {
   //const isDarkMode = useColorScheme() === 'dark';
-
+  const {uri,title,subtitle,date,salary,type} =item
   /*uri="https://img-authors.flaticon.com/google.jpg"
   title="Web Development SDE"
   subtitle="Google"
   salary=12.3
   type="JOB"
   date=new Date()*/
-  date=date.toDateString()
+  console.log(title)
   const pfp=()=>{
     return (
         <Avatar.Image size={40} source={{uri:uri}}/>
@@ -25,7 +25,7 @@ const App = ({uri,title,subtitle,salary,date,type}) => {
   }
 
   return (
-    <Card>
+    <Card style={{marginVertical:2}}>
         <Card.Title title={title} subtitle={subtitle} left={pfp} />
         <Card.Content style={{flexDirection:"row",justifyContent:"space-between"}}>
         <View style={{flexDirection:"row",alignItems:"center"}}>
@@ -36,7 +36,7 @@ const App = ({uri,title,subtitle,salary,date,type}) => {
             <Text style={{fontSize:10}}>apply by</Text>
         <View style={{flexDirection:"row",alignItems:"center",margin:0,padding:0}}>
             <IconButton size={15} icon="calendar-blank"/>
-            <Text>{date}</Text>
+            <Text>{date.toDateString()}</Text>
         </View>
         </View>
         </Card.Content>

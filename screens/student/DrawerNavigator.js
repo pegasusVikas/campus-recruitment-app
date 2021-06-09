@@ -17,10 +17,10 @@ export default ({navigation})=>{
       </View>
       </Drawer.Section>
       <Drawer.Section style={styles.section}>
-          <Drawer.Item icon="account" label="Profile" onPress={()=>{navigation.navigate("Home")}} active={true} />
-          <Drawer.Item icon="briefcase" label="Jobs" onPress={()=>{navigation.navigate("Comp")}}/>
-          <Drawer.Item icon="laptop" label="Internships" onPress={()=>{navigation.navigate("Stud")}}/>
-          <Drawer.Item icon="book" label="Training programs" onPress={()=>{navigation.goBack()}}/>
+          <Drawer.Item icon="account" label="Profile" onPress={()=>{navigation.navigate("Home",{screen:"Profile"})}} active={true} />
+          <Drawer.Item icon="briefcase" label="Jobs" onPress={()=>{navigation.navigate("Jobs")}}/>
+          <Drawer.Item icon="laptop" label="Internships" onPress={()=>{navigation.navigate("common",{screen:"Search",params:{lol:"lol"}})}}/>
+          <Drawer.Item icon="book" label="Training programs" onPress={()=>{navigation.navigate("common",{screen:"details"})}}/>
       </Drawer.Section>
       </View>
       <Drawer.Section style={styles.section}>

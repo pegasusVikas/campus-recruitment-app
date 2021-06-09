@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, Avatar, Title, Subheading, Button, List } from 'react-native-paper';
+import { Text, Avatar, Title, Subheading, Button, List, IconButton } from 'react-native-paper';
 import Clipboard from '@react-native-community/clipboard'
 import {
     Platform,
@@ -13,13 +13,17 @@ import {
 
 import AppBar from "../components/AppBar"
 
-const App = ({ navigation }) => {
+const App = ({navigation,params}) => {
 
+    
+    
     let phone = 6309296046
-    let rollno = "18B81A0554"
-    let schoolPercent=98
-    let interPercent=88
-    let BtechPercent=86
+    let companyName = "Google"
+    let companyEmail="google@google.com"
+    let companyPhone="8834783292"
+    let jobs=["ssss","sssss"]
+    let internships=["ssss"]
+    let trainingPrograms=["ssss","sssss","s","s","s"]
     const [expanded, setExpanded] = React.useState(true);
 
     const handlePress = () => setExpanded(!expanded);
@@ -35,9 +39,6 @@ const App = ({ navigation }) => {
         }
     }
 
-    const open=()=>{
-        Linking.openURL("http://www.africau.edu/images/default/sample.pdf")
-    }
     return (
         <View style={styles.screen}>
             <AppBar navigation={navigation} screen="main" />
@@ -47,13 +48,9 @@ const App = ({ navigation }) => {
                         source={{ uri: "https://www.denofgeek.com/wp-content/uploads/2021/02/Attack-On-Titan-Season-4-Episode-10-Eldian-Scouts.jpg?resize=768%2C432" }} />
                 </View>
                 <View style={styles.name}>
-                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>Vikas Gangadevi</Text>
-                    <Subheading>{rollno}</Subheading>
+                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>{companyName}</Text>
                 </View>
-                <View style={{flexDirection:"row",justifyContent:"space-around"}}>
-                    <Button icon="phone" labelStyle={{fontSize:25}} onPress={() => { Linking.openURL('tel:${' + phone + '}') }} />
-                    <Button icon="email" labelStyle={{fontSize:25}} onPress={() => { Linking.openURL(`mailto:${rollno}@cvr.ac.in`) }} />
-                    </View>
+                
                 <List.Section>
                     <List.Subheader>contacts</List.Subheader>
                     <List.Item title={`${phone}`} description="mobile"
@@ -62,8 +59,8 @@ const App = ({ navigation }) => {
                         left={() =>
                             <Button icon="phone" color="black"  />
                         } />
-                    <List.Item title={`${rollno}@cvr.ac.in`} description="email"
-                        onLongPress={() => { copy(`${rollno}@cvr.ac.in`) }}
+                    <List.Item title={companyEmail} description="email"
+                        onLongPress={() => { copy(companyEmail) }}
                         onPress={() => { }} //onPress prop makes it touchable
                         left={() =>
                             <Button icon="mail" color="black"/>
@@ -71,20 +68,17 @@ const App = ({ navigation }) => {
                     />
                     
                 </List.Section>
-                <List.Section title="academics">
-                        <List.Accordion
-                        title="Scores"
-                        expanded={expanded}
-                        onPress={handlePress}
-                        >
-                        <List.Item title={`${schoolPercent}%`} description="School" />
-                        <List.Item title={`${interPercent}%`} description="Inter" />
-                        <List.Item title={`${BtechPercent}%`} description="BTech" />
-                        </List.Accordion>
+                <List.Section title="hiring programs">
+                        <List.Item title={`Jobs (${jobs.length})`}
+                         titleStyle={{fontWeight:"700"}}
+                         right={()=><IconButton icon="chevron-right"/>} />
+                         <List.Item title={`Internships (${internships.length})`}
+                         titleStyle={{fontWeight:"700"}}
+                         right={()=><IconButton icon="chevron-right"/>} />
+                         <List.Item title={`Trainings (${trainingPrograms.length})`}
+                         titleStyle={{fontWeight:"700"}}
+                         right={()=><IconButton icon="chevron-right"/>} />
                 </List.Section>
-                    <View style={{alignItems:"center"}}>
-                    <Button icon="file-document" mode="contained" onPress={open}>Resume</Button>
-                    </View>
 
             </ScrollView>
         </View>

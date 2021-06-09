@@ -2,20 +2,13 @@ import * as React from 'react';
 import { Appbar } from 'react-native-paper';
 import { Image, StyleSheet, View } from 'react-native';
 
-const MyComponent = ({navigation,screen}) => (
+const MyComponent = ({navigation}) => (
  <Appbar style={{backgroundColor:"white"}}>
     <View>
-    {screen=="main"?
    <Appbar.Action
      icon="menu"
      onPress={() => navigation.openDrawer()}
     />
-    :
-    <Appbar.Action
-     icon="arrow-left-drop-circle"
-     onPress={() => navigation.goBack()}
-    />
-    }
     </View>
     <View style={{flex:5}}/>
     <View>
