@@ -11,19 +11,31 @@ import {
   View,
 
 } from 'react-native';
+import axios from 'axios'
 
+import config from '../config'
 
-const App = () => {
+const App = ({navigation}) => {
   //const isDarkMode = useColorScheme() === 'dark';
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [verifiedEmail, setVerifiedEmail] = useState(false)
 
   const checkEmail = () => {
+    get()
     console.log(email, password)
     setVerifiedEmail(true)
   }
 
+  const get=()=>{
+    console.log("here")
+    axios.post(`${config.url}/api/user/login/student`,{email,password}).then((val)=>{console.log(val.data)})
+    .catch((err)=>console.log(err));
+  }
+
+  const navigateCompany=()=>navigation.navigate("CompanyRegister");
+  const navigateStudent=()=>navigation.navigate("StudentRegister");
+  
   return (
     <KeyboardAvoidingView style={styles.screen}>
       <View style={styles.header}>
@@ -68,8 +80,16 @@ const App = () => {
           <View style={styles.registerCard}>
             <Text style={{ fontSize: 20, margin: 20 }}>Register</Text>
             <View style={styles.registerButton}>
-              <Button style={{ margin: 3 }} icon="school" mode="contained">Student</Button>
-              <Button style={{ margin: 3 }} icon="briefcase" mode="contained">Company</Button>
+              <Button 
+              style={{ margin: 3 }} 
+              icon="school" 
+              mode="contained"
+              onPress={navigateStudent}>Student</Button>
+              <Button style={{ margin: 3 }} 
+              icon="briefcase" 
+              mode="contained"
+              onPress={navigateCompany}
+              >Company</Button>
             </View>
           </View>}
       </KeyboardAvoidingView>

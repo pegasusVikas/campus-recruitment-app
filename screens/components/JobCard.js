@@ -24,9 +24,17 @@ const App = ({item}) => {
     );
   }
 
+  const Counter =()=>{
+    return(
+      <View style={{marginRight:10}}>
+        <Text>Applied : 23</Text>
+        <Text>Shortlisted : 23</Text>
+      </View>
+    )
+  }
   return (
     <Card style={{marginVertical:2}}>
-        <Card.Title title={title} subtitle={subtitle} left={pfp} />
+        <Card.Title title={title} subtitle={subtitle} left={pfp} right={()=><Counter/>} />
         <Card.Content style={{flexDirection:"row",justifyContent:"space-between"}}>
         <View style={{flexDirection:"row",alignItems:"center"}}>
             <IconButton size={20} color="green" icon="cash"/>

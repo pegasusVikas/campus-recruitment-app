@@ -1,10 +1,13 @@
 import React from 'react';
+import DocumentPicker from 'react-native-document-picker'
 import { Button,Text, Card, Avatar, IconButton, Chip, Title, Paragraph, Subheading } from 'react-native-paper';
 import {
     StyleSheet,
     View,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { printCommonLine } from 'jest-diff/build/printDiffs';
+
 
 
 
@@ -18,6 +21,24 @@ const App = () => {
     type = "JOB"
     date = new Date()
     console.log(title)
+
+
+    async function pick(){
+        try{
+    
+            let res=await DocumentPicker.pick({type:[DocumentPicker.types.xls,DocumentPicker.types.xlsx]});
+            console.log(res)
+            return res;
+        }catch(err){
+            if(DocumentPicker.isCancel(err)){
+                console.log("canceled")
+            }else
+                console.log(err)
+        }
+        return;
+    }
+
+
     const pfp = () => {
         return (
             <Avatar.Image size={40} source={{ uri: uri }} />
@@ -68,7 +89,7 @@ const App = () => {
             </Card>
             <Card style={{ marginVertical: 5 }}>  
             <View>
-                <Button mode="contained">Apply</Button>
+                <Button mode="contained" onPress={pick} >Apply</Button>
             </View>
             </Card>
         </ScrollView>
