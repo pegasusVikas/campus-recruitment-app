@@ -11,7 +11,7 @@ import { printCommonLine } from 'jest-diff/build/printDiffs';
 
 
 
-const App = () => {
+const App = ({navigation,route}) => {
     //const isDarkMode = useColorScheme() === 'dark';
     let uri, title, subtitle, date, salary, type
     uri = "https://img-authors.flaticon.com/google.jpg"

@@ -25,12 +25,15 @@ import Login from '../screens/Login'
 import CompanyRegister from '../screens/CompanyRegister'
 import StudentRegister from '../screens/StudentRegister'
 import JobOverview from '../screens/student/JobOverview'
+import CompanyJobOverview from '../screens/company/JobOverview'
 import StudentDrawer from '../screens/student/DrawerNavigator'
+import CompanyDrawer from '../screens/company/DrawerNavigator'
 import StudentProfile from '../screens/student/Profile'
 import CompanyProfile from '../screens/company/Profile'
 import Search from "../screens/Search"
 import JobDetails from "../screens/company/Job"
 import AddJob from "../screens/company/AddJob"
+import ShortListed from "../screens/company/Shortlisted"
 
 const Drawer = createDrawerNavigator();
 const RootStack = createStackNavigator();
@@ -57,9 +60,19 @@ const CommonNavigator = () => {
 const StudentNavigator = (props) => {
     return (
         <Drawer.Navigator drawerContent={(props) => <StudentDrawer {...props} />}>
-            <Drawer.Screen name="AddJob" component={AddJob} />
             <Drawer.Screen name="Profile" component={StudentProfile} />
+            <Drawer.Screen name="AddJob" component={AddJob} />
             <Drawer.Screen name="Jobs" component={JobOverview} />
+        </Drawer.Navigator>
+    );
+}
+
+const CompanyNavigator = (props) => {
+    return (
+        <Drawer.Navigator drawerContent={(props) => <CompanyDrawer {...props} />}>
+            <Drawer.Screen name="AddJob" component={AddJob} />
+            <Drawer.Screen name="Profile" component={CompanyProfile} />
+            <Drawer.Screen name="Jobs" component={CompanyJobOverview} />
         </Drawer.Navigator>
     );
 }
@@ -71,6 +84,7 @@ const App = () => {
         <NavigationContainer>
             <RootStack.Navigator headerMode="none">
             {profile.role == "student" && <RootStack.Screen name="Home" component={StudentNavigator} />}
+            {profile.role == "company" && <RootStack.Screen name="Home" component={CompanyNavigator} />}
                 {profile._id
                     ? 
                     <RootStack.Screen name="common" component={CommonNavigator} />

@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { TextInput, Button } from 'react-native-paper';
+import {useDispatch,useSelector} from 'react-redux'
+import {login} from '../store/action/auth'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   Image,
   ScrollView,
@@ -11,15 +15,15 @@ import {
   View,
 
 } from 'react-native';
-import axios from 'axios'
 
-import config from '../config'
+
 
 const App = ({navigation}) => {
-  //const isDarkMode = useColorScheme() === 'dark';
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [verifiedEmail, setVerifiedEmail] = useState(false)
+
+  const dispatch = useDispatch()
 
   const checkEmail = () => {
     get()
@@ -28,9 +32,7 @@ const App = ({navigation}) => {
   }
 
   const get=()=>{
-    console.log("here")
-    axios.post(`${config.url}/api/user/login/student`,{email,password}).then((val)=>{console.log(val.data)})
-    .catch((err)=>console.log(err));
+    dispatch(login(email,password));
   }
 
   const navigateCompany=()=>navigation.navigate("CompanyRegister");

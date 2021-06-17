@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState ,useEffect} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
 import { ActivityIndicator} from 'react-native-paper';
-import JobCard from '../components/JobCard'
+import JobCard from '../components/JobCardCompany'
 import AppBar from '../components/AppBar'
 import {
     StyleSheet,
@@ -9,14 +10,16 @@ import {
     FlatList,
     SafeAreaView
 } from 'react-native';
+import { getJob,getInternship,getTraining } from '../../store/action/job';
+import { setLoading } from '../../store/action/loading';
 
 
 
 
-const App = ({navigation}) => {
+
+const App = ({navigation,route}) => {
     //const isDarkMode = useColorScheme() === 'dark';
-    const [loading,setLoading] =useState(true)
-    let jobs = [
+    /*let jobs = [
         {
             uri: "https://img-authors.flaticon.com/google.jpg",
             title: "Web Development SDE",
@@ -41,23 +44,42 @@ const App = ({navigation}) => {
             type: "Full-Time",
             date: new Date()
         }
-    ]
-
+    ]*/
+    const dispatch = useDispatch();
+    const loading =useSelector(state=>state.loading)
+    const _id =useSelector(state=>state.profile._id)
+    let jobs =[]
+    if(route.params.type=="job")jobs=useSelector(state=>state.job.jobs)     
+    else if(route.params.type=="internship")jobs=useSelector(state=>state.job.internships)
+    else if(route.params.type=="training")jobs=useSelector(state=>state.job.trainings)
+    
+    
     useEffect(()=>{
-
-    },[])
+        
+        if(route.params.type=="job"){
+         dispatch(getJob(_id))
+        }
+        else if(route.params.type=="internship"){
+            dispatch(getInternship(_id))
+        }
+        else if(route.params.type=="training"){
+            console.log("traing bro")
+            dispatch(getTraining(_id))
+        }
+    },[route.params])
 
     return (
         <>
+        <AppBar navigation={navigation}/>
         {
             loading?
             <ActivityIndicator animating={true} style={{marginTop:"20%"}} size={"large"}color={"purple"}/>
             :<SafeAreaView styles={{flex:1,}}>
-            <AppBar navigation={navigation}/>
+            
             <FlatList
             data={jobs}
-            renderItem={(props)=><JobCard {...props}/>}
-            keyExtractor={(item)=>item.uri}
+            renderItem={(props)=><JobCard {...props} navigation={navigation}/>}
+            keyExtractor={(item)=>item._id}
             />
         </SafeAreaView>
         }

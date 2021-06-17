@@ -8,18 +8,24 @@
 
 import React from 'react';
 import { DefaultTheme,Provider as PaperProvider} from 'react-native-paper';
-import {combineReducers,createStore} from 'redux'
+import {combineReducers,createStore,applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
+import ReduxThunk from 'redux-thunk'
 
 import ProfileReducer from './store/reducer/user'
+import JobReducer from './store/reducer/job'
+import LoadingReducer from './store/reducer/loading'
 
 import AppNavigator from './navigation/RootNavigation'
 
 const reducer=combineReducers({
-  profile:ProfileReducer
+  
+  profile:ProfileReducer,
+  job:JobReducer,
+  loading:LoadingReducer,
 })
 
-const store=createStore(reducer);
+const store=createStore(reducer,applyMiddleware(ReduxThunk));
 
 const theme={
   ...DefaultTheme,

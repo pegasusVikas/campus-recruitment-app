@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Text, Avatar, Title, Subheading, Button, List } from 'react-native-paper';
 import Clipboard from '@react-native-community/clipboard'
+import { useSelector } from 'react-redux';
 import {
     Platform,
     ToastAndroid,
@@ -14,12 +15,6 @@ import {
 import AppBar from "../components/AppBar"
 
 const App = ({ navigation }) => {
-
-    let phone = 6309296046
-    let rollno = "18B81A0554"
-    let schoolPercent=98
-    let interPercent=88
-    let BtechPercent=86
     const [expanded, setExpanded] = React.useState(true);
 
     const handlePress = () => setExpanded(!expanded);
@@ -38,6 +33,9 @@ const App = ({ navigation }) => {
     const open=()=>{
         Linking.openURL("http://www.africau.edu/images/default/sample.pdf")
     }
+
+    const {phoneNo,rollNo,schoolPercentage,interPercentage,btechPercentage} =useSelector(state=>state.profile)
+
     return (
         <View style={styles.screen}>
             <AppBar navigation={navigation} screen="main" />
@@ -48,22 +46,22 @@ const App = ({ navigation }) => {
                 </View>
                 <View style={styles.name}>
                     <Text style={{ fontSize: 20, fontWeight: "bold" }}>Vikas Gangadevi</Text>
-                    <Subheading>{rollno}</Subheading>
+                    <Subheading>{rollNo}</Subheading>
                 </View>
                 <View style={{flexDirection:"row",justifyContent:"space-around"}}>
-                    <Button icon="phone" labelStyle={{fontSize:25}} onPress={() => { Linking.openURL('tel:${' + phone + '}') }} />
-                    <Button icon="email" labelStyle={{fontSize:25}} onPress={() => { Linking.openURL(`mailto:${rollno}@cvr.ac.in`) }} />
+                    <Button icon="phone" labelStyle={{fontSize:25}} onPress={() => { Linking.openURL('tel:${' + phoneNo + '}') }} />
+                    <Button icon="email" labelStyle={{fontSize:25}} onPress={() => { Linking.openURL(`mailto:${rollNo}@cvr.ac.in`) }} />
                     </View>
                 <List.Section>
                     <List.Subheader>contacts</List.Subheader>
-                    <List.Item title={`${phone}`} description="mobile"
+                    <List.Item title={`${phoneNo}`} description="mobile"
                         onPress={() => { }}//onPress prop makes it touchable
-                        onLongPress={() => { copy(`${phone}`) }}
+                        onLongPress={() => { copy(`${phoneNo}`) }}
                         left={() =>
                             <Button icon="phone" color="black"  />
                         } />
-                    <List.Item title={`${rollno}@cvr.ac.in`} description="email"
-                        onLongPress={() => { copy(`${rollno}@cvr.ac.in`) }}
+                    <List.Item title={`${rollNo}@cvr.ac.in`} description="email"
+                        onLongPress={() => { copy(`${rollNo}@cvr.ac.in`) }}
                         onPress={() => { }} //onPress prop makes it touchable
                         left={() =>
                             <Button icon="mail" color="black"/>
@@ -77,9 +75,9 @@ const App = ({ navigation }) => {
                         expanded={expanded}
                         onPress={handlePress}
                         >
-                        <List.Item title={`${schoolPercent}%`} description="School" />
-                        <List.Item title={`${interPercent}%`} description="Inter" />
-                        <List.Item title={`${BtechPercent}%`} description="BTech" />
+                        <List.Item title={`${schoolPercentage}%`} description="School" />
+                        <List.Item title={`${interPercentage}%`} description="Inter" />
+                        <List.Item title={`${btechPercentage}%`} description="BTech" />
                         </List.Accordion>
                 </List.Section>
                     <View style={{alignItems:"center"}}>
