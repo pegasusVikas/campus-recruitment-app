@@ -3,7 +3,7 @@ import {Text,Drawer,Divider} from 'react-native-paper'
 import {View,StyleSheet, Image} from 'react-native'
 
 export default ({navigation})=>{
-    console.log("saddsfdsfdw")
+   
     return (
     <View style={{ flex:1, alignItems: 'center', justifyContent: "space-between" }}>
       <View style={{width:"100%"}}>

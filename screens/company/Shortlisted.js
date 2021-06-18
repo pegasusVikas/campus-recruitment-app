@@ -121,7 +121,7 @@ const Temp = () => {
     <KeyboardAvoidingView style={styles.screen}>
       <Portal>
         <Dialog
-          visible={!!selectedStudent}
+          visible={selectedStudent?true:false}
           onDismiss={() => setSelectedStudent(undefined)}>
           <Dialog.Title>
             <Text>{selectedStudent?.name}</Text>

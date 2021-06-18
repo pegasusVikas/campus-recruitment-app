@@ -6,6 +6,7 @@ import {SET_LOADING} from './loading'
 
 export const POST_JOB = "POST_JOB"
 export const FETCH_JOB = "FETCH_JOB"
+export const FETCH_JOB_ARRAY = "FETCH_JOB_ARRAY"
 export const FETCH_COMPANY_JOBS = "FETCH_COMPANY_JOBS"
 export const FETCH_COMPANY_TRAINING = "FETCH_COMPANY_TRAINING"
 export const FETCH_COMPANY_INTERNSHIPS = "FETCH_COMPANY_INTERNSHIPS"
@@ -41,6 +42,19 @@ export const fetchJob=(_id)=>{
             await setAuthToken();
             const {data} = await axios.get(config.url+'/api/job/'+_id);
             dispatch({type:FETCH_JOB,payload:data})
+            dispatch({type:SET_LOADING,payload:false})
+        }catch(err){
+            console.log(err)
+        }
+    }
+} 
+export const fetchJobArray=(arr)=>{
+    return async dispatch=>{
+        dispatch({type:SET_LOADING,payload:true})
+        try{
+            await setAuthToken();
+            const {data} = await axios.post(config.url+'/api/job/array',{jobs:arr});
+            dispatch({type:FETCH_JOB_ARRAY,payload:data})
             dispatch({type:SET_LOADING,payload:false})
         }catch(err){
             console.log(err)

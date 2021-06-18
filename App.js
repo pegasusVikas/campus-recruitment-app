@@ -14,6 +14,7 @@ import ReduxThunk from 'redux-thunk'
 
 import ProfileReducer from './store/reducer/user'
 import JobReducer from './store/reducer/job'
+import StudentReducer from './store/reducer/student'
 import LoadingReducer from './store/reducer/loading'
 
 import AppNavigator from './navigation/RootNavigation'
@@ -22,6 +23,7 @@ const reducer=combineReducers({
   
   profile:ProfileReducer,
   job:JobReducer,
+  student:StudentReducer,
   loading:LoadingReducer,
 })
 

@@ -5,30 +5,44 @@ import {
   Text,
   View,
 } from 'react-native';
+import config from '../../config';
+import { setLoading } from '../../store/action/loading';
+import { useDispatch } from 'react-redux';
 
 
 
-const App = ({item}) => {
+const App = ({item,navigation}) => {
   //const isDarkMode = useColorScheme() === 'dark';
-  const {uri,title,subtitle,date,salary,type} =item
+  //const {uri,title,subtitle,date,salary,type} =item
+  const {_id,title,_companyId,deadline,salary,type,qualified,applicants} =item
+  const subtitle=_companyId.companyName
+  const shortlisted = qualified.length
+  const applied = applicants.length
+  
   /*uri="https://img-authors.flaticon.com/google.jpg"
   title="Web Development SDE"
   subtitle="Google"
   salary=12.3
   type="JOB"
   date=new Date()*/
-  console.log(title)
+  const onPress =()=>{
+    const bool=true
+    //dispatch(setLoading("sss"))
+    navigation.push("common",{screen:"details",params:{_id:_id}})
+  }
+
   const pfp=()=>{
     return (
-        <Avatar.Image size={40} source={{uri:uri}}/>
+        <Avatar.Image size={40} source={{uri:config.url+"/api/file/profile/"+_companyId._id}}/>
     );
   }
+
 
   const Counter =()=>{
     return(
       <View style={{marginRight:10}}>
-        <Text>Applied : 23</Text>
-        <Text>Shortlisted : 23</Text>
+        <Text>Applied : {applied}</Text>
+        <Text>Shortlisted : {shortlisted}</Text>
       </View>
     )
   }
@@ -44,13 +58,13 @@ const App = ({item}) => {
             <Text style={{fontSize:10}}>apply by</Text>
         <View style={{flexDirection:"row",alignItems:"center",margin:0,padding:0}}>
             <IconButton size={15} icon="calendar-blank"/>
-            <Text>{date.toDateString()}</Text>
+            <Text>{new Date(deadline).toDateString()}</Text>
         </View>
         </View>
         </Card.Content>
         <Card.Content style={{flexDirection:"row",justifyContent:"space-between",marginTop:4}}>
          <Chip>{type}</Chip>
-         <Button mode="contained">Apply</Button>
+         <Button mode="contained" onPress={onPress}>View</Button>
         </Card.Content>
     </Card>
   );

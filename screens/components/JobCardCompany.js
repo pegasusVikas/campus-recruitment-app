@@ -6,29 +6,39 @@ import {
   View,
 } from 'react-native';
 import config from '../../config';
+import { setLoading } from '../../store/action/loading';
+import { useDispatch } from 'react-redux';
 
 
 
 const App = ({item,navigation}) => {
   //const isDarkMode = useColorScheme() === 'dark';
   //const {uri,title,subtitle,date,salary,type} =item
-  const {title,_companyId,deadline,salary,type,qualified,applicants} =item
+  const {_id,title,_companyId,deadline,salary,type,qualified,applicants} =item
   const subtitle=_companyId.companyName
   const shortlisted = qualified.length
   const applied = applicants.length
-  console.log(typeof(deadline))
+  
   /*uri="https://img-authors.flaticon.com/google.jpg"
   title="Web Development SDE"
   subtitle="Google"
   salary=12.3
   type="JOB"
   date=new Date()*/
-  console.log(title)
+  
+  const dispatch=useDispatch()
+  const onPress =()=>{
+    const bool=true
+    //dispatch(setLoading("sss"))
+    navigation.push("common",{screen:"details",params:{_id:_id}})
+  }
+
   const pfp=()=>{
     return (
         <Avatar.Image size={40} source={{uri:config.url+"/api/file/profile/"+_companyId._id}}/>
     );
   }
+
 
   const Counter =()=>{
     return(
@@ -56,7 +66,7 @@ const App = ({item,navigation}) => {
         </Card.Content>
         <Card.Content style={{flexDirection:"row",justifyContent:"space-between",marginTop:4}}>
          <Chip>{type}</Chip>
-         <Button mode="contained">Apply</Button>
+         <Button mode="contained" onPress={onPress}>View</Button>
         </Card.Content>
     </Card>
   );

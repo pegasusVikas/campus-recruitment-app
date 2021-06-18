@@ -1,77 +1,55 @@
-import React,{useEffect, useState} from 'react';
+import React,{useState} from 'react';
 import { Button, Card, Avatar, Text, Chip, Searchbar, List, Checkbox, Drawer,IconButton } from 'react-native-paper';
 import {
-  KeyboardAvoidingView,
   StyleSheet,
   View,
 } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
-import { useDispatch, useSelector } from 'react-redux';
-import { filterStudents, getStudentsByArray } from '../store/action/student';
-import StudentPortal from './components/StudentPortal';
 
 
-const App = ({navigation,route:{params}}) => {
+
+const App = ({ navigator, params }) => {
 
   //let jobs=params.jobs
   const [expand,setExpand] =useState(false);
   const [checked, setChecked] = useState([false,false,false]);
   const [skill,setSkill]=useState("")
-  const [search,setSearch] =useState("");
   const [filterSkill,setFilterSkill]=useState(["ho","dd","dd"]);
   let skils=["react","react-native","angular","flutter","dart","nodejs","Vue","Reacttion","Reacttion"]
 
-  const [visible,setVisible] =useState(false);
-  const [selectedStudent,setSelectedStudent]=useState({});
 
-
-  const students=useSelector(state=>state.student.students)
-  const filteredStudents=useSelector(state=>state.student.filteredStudents)
-  const {_id,role} = useSelector(state=>state.profile)
-  console.log("check",_id,params._companyId)
-  const dispatch=useDispatch()
-  useEffect(()=>{
-    console.log(params)
-    console.log("params.students",params.students)
-    dispatch(getStudentsByArray(params.students))
-  },[params])
-
-
- 
-
-  const onStudentSearch=(text)=>{
-    console.log("hmm",text)
-    setSearch(text)
-  }
-
-  const onSkillSearch=(text)=>{
-    setSkill(text)
-  }
-
-  const onSubmit=()=>{
-    
-    dispatch(filterStudents(students,search,[...checked]))
-    console.log(search)
-  }
-
-  const openModal =(props)=>{
-    setSelectedStudent(()=>{return {...props}})
-    setVisible(true);
-  }
-  
-  const navigateStudent=(props)=>{
-    let student ={...props}
-    delete student.visible
-    navigation.push("studentProfile",{screen:student?.firstName,student})
-  }
-
-  const StudentCard = (props) => {
-    const { firstName,lastName, _id,Class,visible }=props
+  let jobs = [
+    {
+      _id: 2435456,
+      name: "lol"
+    },
+    {
+      _id: 243556,
+      name: "qwerty"
+    },
+    {
+      _id: 24353456,
+      name: "asd"
+    },
+    {
+      _id: 243542356,
+      name: "watch em run"
+    },
+    {
+      _id: 243545643,
+      name: "eheheh"
+    },
+    {
+      _id: 243545236,
+      name: "noiece job"
+    },
+  ]
+  const JobCard = ({ name, _id }) => {
     return (
       <Card style={{ marginVertical: 1,zIndex:-1 }}>
-        <Card.Title title={`${firstName}`} subtitle={`${Class}`}
+        <Card.Title title={`${name}`} subtitle={`${_id}`}
           left={() => <Avatar.Image size={45} source={{ uri: "https://blog.hubspot.com/hubfs/image8-2.jpg" }} />}
-          right={() => <Button onPress={()=>visible?openModal(props):navigateStudent(props)}>View</Button>}
+          right={() => <Button>View</Button>}
         />
       </Card>
     );
@@ -98,12 +76,12 @@ const App = ({navigation,route:{params}}) => {
       <>
           <View style={{ flexDirection: "row" ,justifyContent:"space-evenly"}}>
             <CheckBox name="name" index={0}/>
-            <CheckBox name="roll" index={1}/>
+            <CheckBox name="roll no" index={1}/>
             <CheckBox name="phone" index={2}/>
           </View>
           <View style={styles.skillSearch}>
             <Text style={{fontSize:13,fontStyle:"normal"}}>SKILL</Text>
-            <Searchbar placeholder="Search Skill" onChangeText={onSkillSearch}/>
+            <Searchbar placeholder="Search Skill" onChangeText={(text)=>{setSkill(text)}}/>
             <View>
             <Drawer.Section style={{backgroundColor:"white",position:"absolute",zIndex:10,elevation:7}}>
             <Suggestion/>
@@ -141,29 +119,25 @@ const App = ({navigation,route:{params}}) => {
   }
 
   return (
-    <>
-    <KeyboardAvoidingView style={styles.screen}>
-    <StudentPortal visible={visible} student={selectedStudent} setVisible={setVisible} navigation={navigation} _jobId={params._jobId}/>
+    <View style={styles.screen}>
       <View style={styles.search}>
-        <Searchbar placeholder="Search" onSubmitEditing={onSubmit} onChangeText={onStudentSearch} style={styles.searchbar} />
+        <Searchbar placeholder="Search" onSubmitEditing={()=>console.log("lso")} style={styles.searchbar} />
         <IconButton color="purple" icon="filter" onPress={()=>{setExpand(!expand)}}/>
       </View>
       {expand&&<Filter/>}
       <FlatList
         ListHeaderComponent={SkillFilter}
-        data={filteredStudents}
-        renderItem={({ item }) => <StudentCard {...item} visible={!(role=="student"||(role=="company"&&params._companyId!=_id))}/>}
+        data={jobs}
+        renderItem={({ item }) => <JobCard {...item} />}
         keyExtractor={(item) => item._id}
       />
-    </KeyboardAvoidingView>
-    
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   screen: {
-    
+    flex: 1,
   },
   search: {
     margin: 15,
