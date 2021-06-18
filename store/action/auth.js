@@ -6,14 +6,14 @@ import {SET_LOADING} from './loading'
 export const LOGIN = "LOGIN"
 export const SIGN_UP_COMPANY = "SIGN_UP_COMPANY"
 export const SIGN_UP_STUDENT = "SIGN_UP_STUDENT"
-
+export const FETCH_PROFILE="FETCH_PROFILE"
 
 export const login=(email,password)=>{
     return async (dispatch,getState) =>{
         dispatch({type:SET_LOADING,payload:true})
         try{
             //console.log(getState())
-            const {data}=await axios.post(`${config.url}/api/user/login/company`,{email,password});
+            const {data}=await axios.post(`${config.url}/api/user/login/student`,{email,password});
             console.log(data)
             await AsyncStorage.setItem('token',data.token);
             dispatch({type:LOGIN,payload:data.user})

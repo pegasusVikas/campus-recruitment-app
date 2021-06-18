@@ -30,7 +30,7 @@ const App = ({item,navigation}) => {
   const onPress =()=>{
     const bool=true
     //dispatch(setLoading("sss"))
-    navigation.push("common",{screen:"details",params:{_id:_id}})
+    navigation.push("common",{screen:"details",params:{job:item,screen:item?.title}})
   }
 
   const pfp=()=>{

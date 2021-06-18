@@ -11,7 +11,8 @@ import {
     Linking,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import AppBar from '../components/AppBar'
+import { setCompany } from '../store/action/company';
+import config from '../config';
 
 const copy = (text) => {
 
@@ -26,20 +27,23 @@ const copy = (text) => {
 
 const App = ({navigation,route:{params}}) => {
 
-    const   {companyName, companyEmail,companyPhone,jobId} =useSelector(state=>state.profile)
+    const   {_id,companyName, companyEmail,companyPhone,jobId} =useSelector(state=>state.company.companyProfile)
+    const [expanded, setExpanded] = React.useState(true);
+
+    const dispatch=useDispatch()
     useEffect(()=>{
-    
+        dispatch(setCompany(params.job))
     },[])
+    
     const onPressJobs=()=>{
-        navigation.push("common",{screen:"jobOverview",params:{jobs:jobId}})
+        navigation.push("jobOverview",{jobs:jobId})
     }
     return (
         <View style={styles.screen}>
-            <AppBar navigation={navigation} screen="main"/>
             <ScrollView style={{ paddingLeft: 10 }}>
                 <View style={styles.picture}>
                     <Avatar.Image size={150}
-                        source={{ uri: "https://www.denofgeek.com/wp-content/uploads/2021/02/Attack-On-Titan-Season-4-Episode-10-Eldian-Scouts.jpg?resize=768%2C432" }} />
+                        source={{ uri: `${config.url}/api/file/profile/${_id}` }} />
                 </View>
                 <View style={styles.name}>
                     <Text style={{ fontSize: 20, fontWeight: "bold" }}>{companyName}</Text>

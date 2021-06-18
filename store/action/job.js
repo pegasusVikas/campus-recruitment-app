@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
 import config from '../../config'
 import setAuthToken from '../../utils/setAuthToken';
+import { FETCH_PROFILE } from './auth';
 import {SET_LOADING} from './loading'
 
 export const POST_JOB = "POST_JOB"
@@ -35,12 +36,11 @@ export const postJob=({title,salary,slots,description,deadline,type,btechPercent
     }
 } 
 
-export const fetchJob=(_id)=>{
+export const fetchJob=(item)=>{
     return async dispatch=>{
         dispatch({type:SET_LOADING,payload:true})
         try{
-            await setAuthToken();
-            const {data} = await axios.get(config.url+'/api/job/'+_id);
+            const data=item
             dispatch({type:FETCH_JOB,payload:data})
             dispatch({type:SET_LOADING,payload:false})
         }catch(err){
@@ -106,4 +106,40 @@ export const getTraining=(_id)=>{
         }
     }
 }
+/*
+ * *These below functions are for student Perspective 
+*/
+export const getCurrentJob=(type)=>{
+    return async dispatch=>{
+        dispatch({type:SET_LOADING,payload:true})
+        try{
+            await setAuthToken();
+            const {data} =await axios.get(config.url+'/api/job/current/'+type)
+            console.log(data);
+            
+            if(type=="job")dispatch({type:FETCH_COMPANY_JOBS,payload:data})
+            else if(type=="internship")dispatch({type:FETCH_COMPANY_INTERNSHIPS,payload:data})
+            else if(type=="training")dispatch({type:FETCH_COMPANY_TRAINING,payload:data})
 
+            dispatch({type:SET_LOADING,payload:false})
+        }catch(err){
+            console.log(err)
+        }
+       // dispatch({type:SET_LOADING,payload:false})
+    }
+}
+
+export const applyJob=(_id)=>{
+    return async dispatch=>{
+       
+        try{
+            await setAuthToken();
+            const {data} =await axios.post(config.url+'/api/job/apply/'+_id)
+            dispatch({type:FETCH_JOB,payload:data.job})
+            dispatch({type:FETCH_PROFILE,payload:data.user})
+        }catch(err){
+            console.log(err)
+        }
+       // dispatch({type:SET_LOADING,payload:false})
+    }
+}

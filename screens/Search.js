@@ -9,7 +9,7 @@ import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { filterStudents, getStudentsByArray } from '../store/action/student';
 import StudentPortal from './components/StudentPortal';
-
+import config from '../config';
 
 const App = ({navigation,route:{params}}) => {
 
@@ -69,8 +69,8 @@ const App = ({navigation,route:{params}}) => {
     const { firstName,lastName, _id,Class,visible }=props
     return (
       <Card style={{ marginVertical: 1,zIndex:-1 }}>
-        <Card.Title title={`${firstName}`} subtitle={`${Class}`}
-          left={() => <Avatar.Image size={45} source={{ uri: "https://blog.hubspot.com/hubfs/image8-2.jpg" }} />}
+        <Card.Title title={`${firstName+" "+lastName}`} subtitle={`${Class}`}
+          left={() => <Avatar.Image size={45} source={{ uri: `${config.url}/api/file/profile/${_id}` }} />}
           right={() => <Button onPress={()=>visible?openModal(props):navigateStudent(props)}>View</Button>}
         />
       </Card>

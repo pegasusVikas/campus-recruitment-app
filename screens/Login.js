@@ -19,8 +19,8 @@ import {
 
 
 const App = ({navigation}) => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("18b81a0554@cvr.ac.in")
+  const [password, setPassword] = useState("vikas5467")
   const [verifiedEmail, setVerifiedEmail] = useState(false)
 
   const dispatch = useDispatch()
@@ -60,12 +60,6 @@ const App = ({navigation}) => {
             </View>
           }
           <Text style={{ fontSize: 30, margin: 10 }}>Sign In</Text>
-          {verifiedEmail&&
-          <View style={{alignItems:"center"}}>
-           <Text style={{fontSize:15}}>college</Text>
-           <Text style={{fontSize:25}}>user type</Text>
-           </View>
-          }
           <TextInput style={styles.inputContainer}
             value={verifiedEmail ? password : email}
             label={verifiedEmail ? "Password" : "Email"}

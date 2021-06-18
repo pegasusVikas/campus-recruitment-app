@@ -38,7 +38,7 @@ const App = ({ navigation,route:{params} }) => {
     }
 
     const open=()=>{
-        Linking.openURL("http://www.africau.edu/images/default/sample.pdf")
+        Linking.openURL(`${config.url}/api/file/resume/${_id}`)
     }
 
     const onPressApplicants=()=>{

@@ -28,7 +28,7 @@ const App = ({item,navigation}) => {
   const onPress =()=>{
     const bool=true
     //dispatch(setLoading("sss"))
-    navigation.push("common",{screen:"details",params:{_id:_id}})
+    navigation.push("common",{screen:"details",params:{job:item,screen:item?.title}})
   }
 
   const pfp=()=>{
@@ -36,19 +36,9 @@ const App = ({item,navigation}) => {
         <Avatar.Image size={40} source={{uri:config.url+"/api/file/profile/"+_companyId._id}}/>
     );
   }
-
-
-  const Counter =()=>{
-    return(
-      <View style={{marginRight:10}}>
-        <Text>Applied : {applied}</Text>
-        <Text>Shortlisted : {shortlisted}</Text>
-      </View>
-    )
-  }
   return (
     <Card style={{marginVertical:2}}>
-        <Card.Title title={title} subtitle={subtitle} left={pfp} right={()=><Counter/>} />
+        <Card.Title title={title} subtitle={subtitle} left={pfp}  />
         <Card.Content style={{flexDirection:"row",justifyContent:"space-between"}}>
         <View style={{flexDirection:"row",alignItems:"center"}}>
             <IconButton size={20} color="green" icon="cash"/>

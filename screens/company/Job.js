@@ -7,7 +7,7 @@ import {
     View,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { fetchJob } from '../../store/action/job';
+import { applyJob, fetchJob } from '../../store/action/job';
 import config from '../../config';
 
 
@@ -17,12 +17,12 @@ const App = ({ navigation, route }) => {
     //const isDarkMode = useColorScheme() === 'dark';
     const dispatch = useDispatch();
     const loading = useSelector(state => state.loading)
-    const profile = useSelector(state => state.job.jobProfile)
-    const { title, description, deadline, salary, type, schoolPercentage, interPercentage, btechPercentage, slots,applicants } = profile
-    const { _id, companyName } = profile._companyId
+    const jobProfile = useSelector(state => state.job.jobProfile)
+    const { title, description, deadline, salary, type, schoolPercentage, interPercentage, btechPercentage, slots,applicants } = jobProfile
+    const { _id, companyName } = jobProfile._companyId
     const uri = config.url + "/api/file/profile/" + _id
     useEffect(() => {
-        dispatch(fetchJob(route.params._id))
+        dispatch(fetchJob(route.params.job))
     }, [])
 
     async function pick() {
@@ -41,16 +41,41 @@ const App = ({ navigation, route }) => {
     }
 
     const onPressApplicants=()=>{
-        navigation.push("search",{screen:"details",students:applicants,_companyId:_id,_jobId:profile._id})
+        navigation.push("search",{screen:"details",students:applicants,_companyId:_id,_jobId:jobProfile._id})
     }
 
-    console.log(useSelector(state => state.job.jobProfile))
+    const onPressCompany=()=>{
+        navigation.push("companyProfile",{job:jobProfile._companyId})
+    }
+    
     const pfp = () => {
         return (
             <Avatar.Image size={40} source={{ uri: uri }} />
         );
     }
 
+    const apply=()=>dispatch(applyJob(jobProfile._id))
+
+    const RenderButton=()=>{
+        const profile =useSelector(state=>state.profile)
+        if(new Date(deadline).getTime()<new Date().getTime())
+        return <Button mode="contained" disabled={true} >Expired</Button>
+
+        if(profile.role=="admin")
+        return <Button mode="contained" color="green" onPress={pick} >Shortlist</Button>
+        else if(profile.role=="student"){     
+
+        if(schoolPercentage>profile?.schoolPercentage||interPercentage>profile?.interPercentage||
+            btechPercentage>profile?.btechPercentage)
+            return <Button mode="contained" disabled={true} >Not Eligible</Button>   
+        if(profile.applied.includes(jobProfile._id))
+            return <Button mode="contained" disabled={true} >Applied</Button>  
+
+        return <Button mode="contained" onPress={apply} >Apply</Button>
+        }
+        return<></>
+    }
+    const icon=()=><IconButton icon="export" onPress={onPressCompany}/>
     return (
         <ScrollView>
             {
@@ -59,7 +84,7 @@ const App = ({ navigation, route }) => {
                     :
                     <>
                         <Card style={{ marginVertical: 2 }}>
-                            <Card.Title title={title} subtitle={companyName} left={pfp} />
+                            <Card.Title title={title} subtitle={companyName} left={pfp} right={icon} />
                             <Card.Content style={{ flexDirection: "row", justifyContent: "space-between" }}>
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                                     <IconButton size={20} color="green" icon="cash" />
@@ -107,7 +132,7 @@ const App = ({ navigation, route }) => {
                         
                         <Card style={{ marginVertical: 5 }}>
                             <View>
-                                <Button mode="contained" onPress={pick} >Apply</Button>
+                                <RenderButton/>
                             </View>
                         </Card>
                     </>
