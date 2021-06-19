@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { TextInput, Button } from 'react-native-paper';
+import { TextInput, Button,RadioButton, HelperText } from 'react-native-paper';
 import {useDispatch,useSelector} from 'react-redux'
 import {login} from '../store/action/auth'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   Image,
@@ -19,12 +18,13 @@ import {
 
 
 const App = ({navigation}) => {
-  const [email, setEmail] = useState("18b81a0554@cvr.ac.in")
-  const [password, setPassword] = useState("vikas5467")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [verifiedEmail, setVerifiedEmail] = useState(false)
+  const [type,setType] =useState("student")
 
   const dispatch = useDispatch()
-
+  const loading =useSelector(state=>state.loading)
   const checkEmail = () => {
     get()
     console.log(email, password)
@@ -32,7 +32,7 @@ const App = ({navigation}) => {
   }
 
   const get=()=>{
-    dispatch(login(email,password));
+    verifiedEmail&&dispatch(login(email,password,type))
   }
 
   const navigateCompany=()=>navigation.navigate("CompanyRegister");
@@ -68,8 +68,30 @@ const App = ({navigation}) => {
             underlineColor="pink"
             onChangeText={(text) => verifiedEmail ? setPassword(text) : setEmail(text)}
           />
+          {!verifiedEmail&&
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <RadioButton
+              value="job"
+              status={type === 'student' ? 'checked' : 'unchecked'}
+              onPress={() => setType("student")}
+            />
+            <Text>Student</Text>
+            <RadioButton
+              value="job"
+              status={type === 'admin' ? 'checked' : 'unchecked'}
+              onPress={() => setType("admin")}
+            />
+            <Text>Admin</Text>
+            <RadioButton
+              value="internship"
+              status={type === 'company' ? 'checked' : 'unchecked'}
+              onPress={() => setType("company")}
+            />
+            <Text>Company</Text>
+          </View>
+          }
           <Button mode="contained" onPress={checkEmail}>{verifiedEmail ? "Login" : "Next"}</Button>
-
+          <HelperText visible={loading}>Invalid email or password</HelperText>
         </View>
         {
           !verifiedEmail &&

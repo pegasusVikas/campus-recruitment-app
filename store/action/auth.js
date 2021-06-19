@@ -4,16 +4,17 @@ import config from '../../config'
 import {SET_LOADING} from './loading'
 
 export const LOGIN = "LOGIN"
+export const LOGOUT = "LOGOUT"
 export const SIGN_UP_COMPANY = "SIGN_UP_COMPANY"
 export const SIGN_UP_STUDENT = "SIGN_UP_STUDENT"
 export const FETCH_PROFILE="FETCH_PROFILE"
 
-export const login=(email,password)=>{
+export const login=(email,password,type)=>{
     return async (dispatch,getState) =>{
         dispatch({type:SET_LOADING,payload:true})
         try{
             //console.log(getState())
-            const {data}=await axios.post(`${config.url}/api/user/login/student`,{email,password});
+            const {data}=await axios.post(`${config.url}/api/user/login/`+type,{email,password});
             console.log(data)
             await AsyncStorage.setItem('token',data.token);
             dispatch({type:LOGIN,payload:data.user})
@@ -72,5 +73,13 @@ export const registerStudent=
         }catch(err){
             console.error(err.message)
         }
+    }
+}
+
+export const logout=()=>{
+    console.log("here")
+    return async dispatch =>{
+        await AsyncStorage.removeItem('token')
+        dispatch({type:LOGOUT})
     }
 }

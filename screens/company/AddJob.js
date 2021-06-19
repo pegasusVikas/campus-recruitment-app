@@ -54,6 +54,7 @@ export default (props) => {
         }
       console.log("submitted");
       dispatch(postJob(form));
+      setForm(initial);
     }
     
   }

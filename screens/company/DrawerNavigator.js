@@ -1,9 +1,11 @@
 import React from 'react'
 import {Text,Drawer,Divider} from 'react-native-paper'
 import {View,StyleSheet, Image} from 'react-native'
+import { useDispatch } from 'react-redux'
+import { logout } from '../../store/action/auth'
 
 export default ({navigation})=>{
-   
+    const dispatch=useDispatch()
     return (
     <View style={{ flex:1, alignItems: 'center', justifyContent: "space-between" }}>
       <View style={{width:"100%"}}>
@@ -23,7 +25,7 @@ export default ({navigation})=>{
       </Drawer.Section>
       </View>
       <Drawer.Section style={styles.section}>
-          <Drawer.Item icon="logout" label="Log out"/>
+          <Drawer.Item icon="logout" label="Log out" onPress={()=>dispatch(logout())}/>
       </Drawer.Section>
     </View>
     );
@@ -36,7 +38,7 @@ const styles=new StyleSheet.create({
         paddingTop:30,
         alignItems:"center",
         flexDirection:"column",
-        backgroundColor:"orange"
+        backgroundColor:"white"
     },
     logo:{
         width:110,

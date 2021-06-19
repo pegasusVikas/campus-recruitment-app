@@ -21,7 +21,8 @@ import config from '../../config';
 const App = ({ navigation }) => {
     const [expanded, setExpanded] = React.useState(true);
     const dispatch = useDispatch()
-    const {_id, phoneNo, rollNo, schoolPercentage, interPercentage, btechPercentage } = useSelector(state => state.profile)
+    const {_id, phoneNo,firstName,lastName,Class, rollNo, schoolPercentage, interPercentage, btechPercentage,role } = useSelector(state => state.profile)
+    const loading = useSelector(state=>state.loading)
     console.log(_id)
     const handlePress = () => setExpanded(!expanded);
 
@@ -88,18 +89,21 @@ const App = ({ navigation }) => {
             <ScrollView style={{ paddingLeft: 10 }}>
                 <View style={styles.picture}>
                     <Avatar.Image size={150}
+                        key={Math.random()}
                         source={{ uri: `${config.url}/api/file/profile/${_id}` }} />
                         <IconButton icon="square-edit-outline" onPress={pickPicture}/>
                 </View>
                 <View style={styles.name}>
-                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>Vikas Gangadevi</Text>
+                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>{firstName+" "+lastName}</Text>
                     <Subheading>{rollNo}</Subheading>
+                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>{Class}</Text>
                 </View>
                 <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
                     <Button icon="phone" labelStyle={{ fontSize: 25 }} onPress={() => { Linking.openURL('tel:${' + phoneNo + '}') }} />
                     <Button icon="email" labelStyle={{ fontSize: 25 }} onPress={() => { Linking.openURL(`mailto:${rollNo}@cvr.ac.in`) }} />
                 </View>
-                <List.Section>
+                
+                {role!="admin"&&<><List.Section>
                     <List.Subheader>contacts</List.Subheader>
                     <List.Item title={`${phoneNo}`} description="mobile"
                         onPress={() => { }}//onPress prop makes it touchable
@@ -133,7 +137,7 @@ const App = ({ navigation }) => {
                         <Button icon="cloud-upload" onPress={pickResume} />
                     </View>
 
-                </List.Section>
+                </List.Section></>}
             </ScrollView>
         </View>
     );

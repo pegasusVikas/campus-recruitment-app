@@ -51,26 +51,26 @@ const CommonNavigator = () => {
     return (
         <CommonStack.Navigator >
             <CommonStack.Screen name="details" component={JobDetails} options={(props) => {
-                return { headerTitle: "details " + (props.route.params['screen'] || 'job') }
+                return { headerTitle: "details " + (props.route.params?.screen || 'job') }
             }} />
 
             <CommonStack.Screen name="jobOverview" component={CommonJobOverview} options={(props) => {
-                return { headerTitle: props.route.params['screen'] || 'jobs' }
+                return { headerTitle: props.route.params?.screen || 'jobs' }
             }} />
 
             <CommonStack.Screen name="companyProfile" component={ViewCompanyProfile} options={(props) => {
-                return { headerTitle: props.route.params['screen'] || 'company' }
+                return { headerTitle: props.route.params?.screen || 'company' }
             }} />
 
             <CommonStack.Screen name="search" options={(props) => {
-                let screen = props.route.params['screen'] || 'students'
+                let screen = props.route.params?.screen || 'students'
                 return {
                     headerTitle: screen
                 }
 
             }} component={Search} />
             <CommonStack.Screen name="studentProfile" options={(props) => {
-                let screen = props.route.params['screen'] || 'student'
+                let screen = props.route.params?.screen || 'student'
                 return {
                     headerTitle: screen
                 }
@@ -107,7 +107,7 @@ const App = () => {
     return (
         <NavigationContainer>
             <RootStack.Navigator headerMode="none">
-                {profile.role == "student" && <RootStack.Screen name="Home" component={StudentNavigator} />}
+                {(profile.role == "student"||profile.role == "admin") && <RootStack.Screen name="Home" component={StudentNavigator} />}
                 {profile.role == "company" && <RootStack.Screen name="Home" component={CompanyNavigator} />}
                 {profile._id
                     ?

@@ -102,7 +102,7 @@ export const uploadResume = (file) => {
     
     return async (dispatch) => {
         try {
-            //dispatch({ type: SET_LOADING, payload: true })
+            dispatch({ type: SET_LOADING, payload: true })
             const token =await AsyncStorage.getItem('token')
            
             const xhr = new XMLHttpRequest();
@@ -112,6 +112,7 @@ export const uploadResume = (file) => {
             xhr.onload = () => {
                 const response = JSON.parse(xhr.response)
                 console.log(response);
+                dispatch({ type: SET_LOADING, payload: false })
             };
             xhr.onerror = e => {
                 console.log(e, 'upload failed');
@@ -134,7 +135,7 @@ export const uploadProfilePicture = (file) => {
     
     return async (dispatch) => {
         try {
-            //dispatch({ type: SET_LOADING, payload: true })
+            dispatch({ type: SET_LOADING, payload: true })
             const token =await AsyncStorage.getItem('token')
            
             const xhr = new XMLHttpRequest();
@@ -144,7 +145,7 @@ export const uploadProfilePicture = (file) => {
             xhr.onload = () => {
                 const response = JSON.parse(xhr.response)
                 console.log(response);
-                dispatch({type:"NOTHING"})
+                dispatch({ type: SET_LOADING, payload: false })
             };
             xhr.onerror = e => {
                 console.log(e, 'upload failed');

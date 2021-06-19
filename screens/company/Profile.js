@@ -12,6 +12,10 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import AppBar from '../components/AppBar'
+import config from '../../config';
+import DocumentPicker from 'react-native-document-picker';
+import { uploadProfilePicture } from '../../store/action/student';
+
 
 const copy = (text) => {
 
@@ -26,12 +30,35 @@ const copy = (text) => {
 
 const App = ({navigation,route:{params}}) => {
 
-    const   {companyName, companyEmail,companyPhone,jobId} =useSelector(state=>state.profile)
+    const   {_id,companyName, companyEmail,companyPhone,jobId} =useSelector(state=>state.profile)
+    const dispatch =useDispatch();
     useEffect(()=>{
     
     },[])
+
+
     const onPressJobs=()=>{
         navigation.push("common",{screen:"jobOverview",params:{jobs:jobId}})
+    }
+
+    async function pickPicture() {
+        try {
+
+            let res = await DocumentPicker.pick({ type: [DocumentPicker.types.images] });
+            console.log(res)
+            if (!res) return;
+            const data = new FormData();
+            data.append('name', 'prof')
+            data.append('profile', res);
+            dispatch(uploadProfilePicture(data))
+
+        } catch (err) {
+            if (DocumentPicker.isCancel(err)) {
+                console.log("canceled")
+            } else
+                console.log(err)
+        }
+        return;
     }
     return (
         <View style={styles.screen}>
@@ -39,7 +66,8 @@ const App = ({navigation,route:{params}}) => {
             <ScrollView style={{ paddingLeft: 10 }}>
                 <View style={styles.picture}>
                     <Avatar.Image size={150}
-                        source={{ uri: "https://www.denofgeek.com/wp-content/uploads/2021/02/Attack-On-Titan-Season-4-Episode-10-Eldian-Scouts.jpg?resize=768%2C432" }} />
+                        source={{ uri: `${config.url}/api/file/profile/${_id}`  }} />
+                        <IconButton icon="square-edit-outline" onPress={pickPicture}/>
                 </View>
                 <View style={styles.name}>
                     <Text style={{ fontSize: 20, fontWeight: "bold" }}>{companyName}</Text>

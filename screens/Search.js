@@ -82,14 +82,7 @@ const App = ({navigation,route:{params}}) => {
       <ScrollView 
       horizontal={true}
       style={styles.skillFilter}>
-        <Chip onClose={()=>{console.log("close")}}><Text style={{fontSize:15,fontWeight:"800"}}>React</Text></Chip>
-        <Chip onClose={()=>{console.log("close")}}>React</Chip>
-        <Chip onClose={()=>{console.log("close")}}>React</Chip>
-        <Chip onClose={()=>{console.log("close")}}>React</Chip>
-        <Chip onClose={()=>{console.log("close")}}>React</Chip>
-        <Chip onClose={()=>{console.log("close")}}>React</Chip>
-        <Chip onClose={()=>{console.log("close")}}>React</Chip>
-        <Chip onClose={()=>{console.log("close")}}>React</Chip>
+        
       </ScrollView>
     );
   }
@@ -100,15 +93,6 @@ const App = ({navigation,route:{params}}) => {
             <CheckBox name="name" index={0}/>
             <CheckBox name="roll" index={1}/>
             <CheckBox name="phone" index={2}/>
-          </View>
-          <View style={styles.skillSearch}>
-            <Text style={{fontSize:13,fontStyle:"normal"}}>SKILL</Text>
-            <Searchbar placeholder="Search Skill" onChangeText={onSkillSearch}/>
-            <View>
-            <Drawer.Section style={{backgroundColor:"white",position:"absolute",zIndex:10,elevation:7}}>
-            <Suggestion/>
-            </Drawer.Section>
-            </View>
           </View>
         </>
     );

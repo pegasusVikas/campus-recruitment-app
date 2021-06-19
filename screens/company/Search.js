@@ -60,14 +60,7 @@ const App = ({ navigator, params }) => {
       <ScrollView 
       horizontal={true}
       style={styles.skillFilter}>
-        <Chip onClose={()=>{console.log("close")}}><Text style={{fontSize:15,fontWeight:"800"}}>React</Text></Chip>
-        <Chip onClose={()=>{console.log("close")}}>React</Chip>
-        <Chip onClose={()=>{console.log("close")}}>React</Chip>
-        <Chip onClose={()=>{console.log("close")}}>React</Chip>
-        <Chip onClose={()=>{console.log("close")}}>React</Chip>
-        <Chip onClose={()=>{console.log("close")}}>React</Chip>
-        <Chip onClose={()=>{console.log("close")}}>React</Chip>
-        <Chip onClose={()=>{console.log("close")}}>React</Chip>
+        
       </ScrollView>
     );
   }

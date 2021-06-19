@@ -22,7 +22,8 @@ const App = ({ navigation,route:{params} }) => {
     useEffect(()=>{
         dispatch(setStudent(params.student));
     },[])
-    const {_id,phoneNo,rollNo,applied,schoolPercentage,interPercentage,btechPercentage} =useSelector(state=>state.student.studentProfile)
+    const {_id,firstName,lastName,Class,phoneNo,rollNo,applied,schoolPercentage,interPercentage,btechPercentage} =useSelector(state=>state.student.studentProfile)
+
     
     const handlePress = () => setExpanded(!expanded);
 
@@ -49,11 +50,13 @@ const App = ({ navigation,route:{params} }) => {
             <ScrollView style={{ paddingLeft: 10 }}>
                 <View style={styles.picture}>
                     <Avatar.Image size={150}
+                        
                         source={{ uri: `${config.url}/api/file/profile/${_id}` }} />
                 </View>
                 <View style={styles.name}>
-                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>Vikas Gangadevi</Text>
+                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>{firstName+" "+lastName}</Text>
                     <Subheading>{rollNo}</Subheading>
+                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>{Class}</Text>
                 </View>
                 <View style={{flexDirection:"row",justifyContent:"space-around"}}>
                     <Button icon="phone" labelStyle={{fontSize:25}} onPress={() => { Linking.openURL('tel:${' + phoneNo + '}') }} />

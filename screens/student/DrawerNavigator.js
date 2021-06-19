@@ -5,7 +5,11 @@ import {
     DrawerItem,
     DrawerContentScrollView
 } from '@react-navigation/drawer'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../../store/action/auth'
 export default ({ navigation }) => {
+    const dispatch =useDispatch()
+    const role =useSelector(state=>state.profile.role)
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: "space-between" }}>
             <View style={{ width: "100%" }}>
@@ -17,14 +21,14 @@ export default ({ navigation }) => {
                     </View>
                 </Drawer.Section>
                 <Drawer.Section style={styles.section}>
-                    <Drawer.Item icon="account" label="Profile" onPress={() => { navigation.navigate("Home", { screen: "Profile" }) }} active={true} />
+                    {role!="admin"&&<Drawer.Item icon="account" label="Profile" onPress={() => { navigation.navigate("Home", { screen: "Profile" }) }} active={true} />}
                     <Drawer.Item icon="briefcase" label="Jobs" onPress={() => { navigation.navigate("Jobs", { type: "job" }) }} />
                     <Drawer.Item icon="laptop" label="Internships" onPress={() => { navigation.navigate("Jobs", { type: "internship" }) }} />
                     <Drawer.Item icon="book" label="Training programs" onPress={() => { navigation.navigate("Jobs", { type: "training" }) }} />
                 </Drawer.Section>
             </View>
             <Drawer.Section style={styles.section}>
-                <Drawer.Item icon="logout" label="Log out" />
+                <Drawer.Item icon="logout" label="Log out" onPress={()=>dispatch(logout())} />
             </Drawer.Section>
         </View>
     );
@@ -37,7 +41,7 @@ const styles = new StyleSheet.create({
         paddingTop: 30,
         alignItems: "center",
         flexDirection: "column",
-        backgroundColor: "orange"
+        backgroundColor: "white"
     },
     logo: {
         width: 110,
