@@ -90,7 +90,7 @@ const App = ({ navigation }) => {
                 <View style={styles.picture}>
                     <Avatar.Image size={150}
                         key={Math.random()}
-                        source={{ uri: `${config.url}/api/file/profile/${_id}` }} />
+                        source={{ uri:`${config.url}/api/file/profile/${_id}` +'?' + new Date() }} />
                         <IconButton icon="square-edit-outline" onPress={pickPicture}/>
                 </View>
                 <View style={styles.name}>

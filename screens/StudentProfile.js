@@ -51,7 +51,7 @@ const App = ({ navigation,route:{params} }) => {
                 <View style={styles.picture}>
                     <Avatar.Image size={150}
                         
-                        source={{ uri: `${config.url}/api/file/profile/${_id}` }} />
+                        source={{ uri: `${config.url}/api/file/profile/${_id}` +'?' + new Date() }} />
                 </View>
                 <View style={styles.name}>
                     <Text style={{ fontSize: 20, fontWeight: "bold" }}>{firstName+" "+lastName}</Text>

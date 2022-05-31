@@ -66,7 +66,7 @@ const App = ({navigation,route:{params}}) => {
             <ScrollView style={{ paddingLeft: 10 }}>
                 <View style={styles.picture}>
                     <Avatar.Image size={150}
-                        source={{ uri: `${config.url}/api/file/profile/${_id}`  }} />
+                        source={{ uri: `${config.url}/api/file/profile/${_id}` +'?' + new Date()  }} />
                         <IconButton icon="square-edit-outline" onPress={pickPicture}/>
                 </View>
                 <View style={styles.name}>
@@ -74,7 +74,7 @@ const App = ({navigation,route:{params}}) => {
                 </View>
                 
                 <List.Section>
-                    <List.Subheader>contacts</List.Subheader>
+                    <List.Subheader>contact</List.Subheader>
                     <List.Item title={`${companyPhone}`} description="mobile"
                         onPress={() => { }}//onPress prop makes it touchable
                         onLongPress={() => { copy(`${companyPhone}`) }}

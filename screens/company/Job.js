@@ -20,7 +20,6 @@ const App = ({ navigation, route }) => {
     const jobProfile = useSelector(state => state.job.jobProfile)
     const { title, description, deadline, salary, type, schoolPercentage, interPercentage, btechPercentage, slots,applicants } = jobProfile
     const { _id, companyName } = jobProfile._companyId
-    const uri = config.url + "/api/file/profile/" + _id
     useEffect(() => {
         dispatch(fetchJob(route.params.job))
     }, [])
@@ -50,7 +49,7 @@ const App = ({ navigation, route }) => {
     
     const pfp = () => {
         return (
-            <Avatar.Image size={40} source={{ uri: uri }} />
+            <Avatar.Image size={40} source={{ uri: config.url + "/api/file/profile/" + _id +'?' + new Date() }} />
         );
     }
 

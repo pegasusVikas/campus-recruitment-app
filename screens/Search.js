@@ -70,7 +70,7 @@ const App = ({navigation,route:{params}}) => {
     return (
       <Card style={{ marginVertical: 1,zIndex:-1 }}>
         <Card.Title title={`${firstName+" "+lastName}`} subtitle={`${Class}`}
-          left={() => <Avatar.Image size={45} source={{ uri: `${config.url}/api/file/profile/${_id}` }} />}
+          left={() => <Avatar.Image size={45} source={{ uri: `${config.url}/api/file/profile/${_id}` +'?' + new Date() }} />}
           right={() => <Button onPress={()=>visible?openModal(props):navigateStudent(props)}>View</Button>}
         />
       </Card>
